@@ -12,7 +12,7 @@ contract SkyPet{
     uint256 constant public costToAdd=100000000000000000;// .1 ether
     address public owner;
     modifier onlyOwner { if (msg.sender == owner) _; } //ensure only owner does some things
-    modifier onlyIfHasEnoughEther { if (msg.value>=costToAdd) _; }  
+    modifier onlyIfHasEnoughEther { if (msg.value>=costToAdd) _; }  //see https://blog.ethcore.io/condition-oriented-programming-2/
     struct Attribute{
       uint timestamp;
       string jsonText; //must be a json string...if not, wont decrypt in client, and your loss
@@ -27,8 +27,8 @@ contract SkyPet{
         throw;
       }
     }
-    function addAttribute(bytes32 _petid, string _attribute) onlyIfHasEnoughEther payable {//see https://blog.ethcore.io/condition-oriented-programming-2/
-      checkSendFunds(!msg.sender.send(msg.value-costToAdd));//guaranteed to be at least 0
+    function addAttribute(bytes32 _petid, string _attribute) onlyIfHasEnoughEther payable {
+      checkSendFunds(!msg.sender.send(msg.value-costToAdd));//guaranteed to be at least 0...note that this sends back any excess funds that the sender may have provided.
       pet[_petid].push(Attribute(now, _attribute));
       attributeAdded(_petid, _attribute); //alert watchers that transaction went through
     }
@@ -39,13 +39,11 @@ contract SkyPet{
       return pet[_petid].length;
     }
     function getAttribute(bytes32 _petid, uint index) public constant returns(uint, string){
-      //return(pet[_petid][index].timesamp);
       return(pet[_petid][index].timestamp, pet[_petid][index].jsonText);
     }
     function () {
         throw; // throw reverts state to before call
     }
-    
     function getRevenue() onlyOwner payable{ //scrape currently obtained revenue.  Dont do this every transaction to save on transaction costs
       checkSendFunds(!owner.send(this.balance));
     }
