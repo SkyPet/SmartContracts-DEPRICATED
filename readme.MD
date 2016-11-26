@@ -8,8 +8,17 @@ Install testrpc `npm install -g testrpc`
 
 Run testrpc `testrpc`
 
+Install our fork of truffle `https://github.com/SkyPet/truffle`.
+
 In a seperate terminal, cd to the repository and type 
-`truffle test`
+`path/to/skypet/truffle/cli.js test`
+
+##To compile contracts (includes abi and bytecode)
+
+Install our fork of truffle `https://github.com/SkyPet/truffle`.
+
+In a seperate terminal, cd to the repository and type 
+`path/to/skypet/truffle/cli.js compile`
 
 ##Todo
 Make contracts deployable to testrpc, testnet, and mainnet.
