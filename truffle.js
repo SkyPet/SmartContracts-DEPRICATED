@@ -12,5 +12,15 @@ module.exports = {
   rpc: {
     host: "localhost",
     port: 8545
+  },
+  networks: {
+    "main": {
+      network_id: 1,
+      gas: 4712388
+    },
+    "testnet": {
+      network_id: 3,
+      gas: 4712388
+    }
   }
 };
