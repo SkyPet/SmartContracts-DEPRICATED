@@ -34,4 +34,15 @@ contract('SkyPet', function(accounts) {
       });
     });
   });
+  it("should error because string too long", function() {
+    // Get a reference to the deployed SkyPet contract, as a JS object.
+    var skypet = SkyPet.deployed();
+    return skypet.costToAdd().then((cost)=>{
+      return skypet.addAttribute.sendTransaction(testSha, "helloworldhelloworldhelloworldhelloworldhelloworldhelloworldhelloworldhelloworldhelloworldhelloworldhelloworldhelloworldhelloworldhelloworld", {value:cost, gas:3000000}).then((newIndex)=>{
+        
+          //assert.equal(result, 2, "attributes not working");
+        //});        
+      });
+    });
+  });
 });
